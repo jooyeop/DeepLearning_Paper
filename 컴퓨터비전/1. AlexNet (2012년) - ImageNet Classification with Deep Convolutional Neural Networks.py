@@ -150,12 +150,12 @@ train_model(model, criterion, optimizer, num_epochs=10) #visualize=True
 
 # 최종 test 이미지 측정 후 결과 출력
 def test_model(model, test_loader, criterion):
-    model.eval()  # Set the model to evaluation mode
+    model.eval()
     running_loss = 0.0
     running_corrects = 0
     all_preds = []
     all_labels = []
-    with torch.no_grad():  # Turn off gradients for validation, saves memory and computations
+    with torch.no_grad():  # 검증을 위해 그라디언트를 종료하고, 메모리 사용량을 줄임
         for inputs, labels in test_loader:
             inputs = inputs.to(device)
             labels = labels.to(device)
@@ -170,12 +170,12 @@ def test_model(model, test_loader, criterion):
     test_acc = running_corrects.double() / len(test_loader.dataset)
     print(f'Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}')
     
-    # Show a few prediction results
-    for i in range(5):  # Assuming you want to see 5 samples
+    # 결과 확인
+    for i in range(5):
         print(f'Image: {test_dataset.img_names[i]} - Real: {test_dataset.classes[all_labels[i]]}, Predicted: {test_dataset.classes[all_preds[i]]}')
     return test_loss, test_acc
 
-# Model should be already loaded before calling this function
+# Mooel load
 test_loss, test_acc = test_model(model, test_loader, criterion)
 
 def imshow(inp, title=None):
@@ -188,18 +188,18 @@ def imshow(inp, title=None):
     plt.imshow(inp)
     if title is not None:
         plt.title(title)
-    plt.pause(0.001)  # pause a bit so that plots are updated
+    plt.pause(0.001)
 
-# Get a batch of training data
+# 테스트 데이터셋에서 이미지 및 레이블 가져오기
 images, labels = next(iter(test_loader))
 
-# Make predictions
+# 모델을 사용하여 예측
 outputs, _, _ = model(images.to(device))
 _, preds = torch.max(outputs, 1)
 
-# Plot the images in the batch, along with the corresponding labels
+# 이미지 및 예측 결과 시각화
 fig = plt.figure(figsize=(25, 4))
-for idx in np.arange(5):  # Assuming you want to see 5 samples
+for idx in np.arange(5):  # 5개의 이미지 샘플을 시각화
     ax = fig.add_subplot(1, 5, idx+1, xticks=[], yticks=[])
     imshow(images.cpu().data[idx])
     ax.set_title(f"Real: {test_dataset.classes[labels[idx]]}\nPredicted: {test_dataset.classes[preds[idx].cpu().numpy()]}")
