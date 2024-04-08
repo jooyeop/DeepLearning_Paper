@@ -189,7 +189,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # 모델 훈련 및 첫 번째 배치의 중간 레이어 시각화
-train_model(model, criterion, optimizer, num_epochs=1, visualize=True)
+train_model(model, criterion, optimizer, num_epochs=10)#, visualize=True)
 
 
 # 최종 test 이미지 측정 후 결과 출력
