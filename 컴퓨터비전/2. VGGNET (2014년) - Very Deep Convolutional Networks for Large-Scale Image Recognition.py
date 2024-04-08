@@ -140,6 +140,27 @@ def visualize_feature_map(feature_map_batch, img_names, num_images=1, num_column
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
         plt.show()
 
+# def visualize_layer_output(model, layer_num, data_loader):
+#     images, _ = next(iter(data_loader))  # 데이터 로더에서 첫 번째 배치를 가져옴
+
+#     images = images.to(device)  # 입력 이미지를 GPU로 이동시키는 부분을 추가
+
+#     with torch.no_grad():  # 그라디언트 계산을 중지하여 메모리 사용량을 줄임
+#         x = images
+#         for i, layer in enumerate(model.features):
+#             x = layer(x)
+#             if i == layer_num:
+#                 break
+        
+#         # 선택된 레이어의 출력 시각화
+#         out_features = x
+#         fig, axes = plt.subplots(1, min(4, out_features.shape[1]), figsize=(20, 5))
+#         for i, ax in enumerate(axes):
+#             ax.imshow(out_features[0, i].cpu().numpy(), cmap='viridis')  # GPU 텐서를 CPU로 이동시키고 numpy 배열로 변환
+#             ax.axis('off')
+#         plt.show()
+
+
 # 훈련 과정에서 중간 레이어의 특징 맵을 시각화합니다.
 def train_model(model, criterion, optimizer, num_epochs=10, visualize=False):
     for epoch in range(num_epochs):
@@ -156,7 +177,9 @@ def train_model(model, criterion, optimizer, num_epochs=10, visualize=False):
             if visualize and i == 0:  # 첫 번째 배치에 대해 시각화
                 img_names = [train_dataset.img_names[j] for j in range(inputs.size(0))]
                 visualize_feature_map(features_conv2, img_names)
+                # visualize_layer_output(model, 10, train_loader)
                 visualize_feature_map(features_conv3, img_names)
+                # visualize_layer_output(model, 17, train_loader)
         epoch_loss = running_loss / len(train_loader.dataset)
         print(f'Epoch {epoch+1}/{num_epochs}, Loss: {epoch_loss:.4f}')
 
