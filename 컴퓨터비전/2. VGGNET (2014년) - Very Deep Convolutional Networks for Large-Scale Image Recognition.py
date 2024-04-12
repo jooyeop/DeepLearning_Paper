@@ -59,49 +59,56 @@ class VGG16(nn.Module):
         # VGG-16의 합성곱 계층과 맥스풀링 계층을 구성하는 부분
         self.features = nn.Sequential(
             # 첫 번째 블록
-            nn.Conv2d(3, 64, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(3, 64, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(64, 64, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.MaxPool2d(kernel_size = 2, stride = 2),
             # 두 번째 블록
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(128, 128, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(64, 128, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(128, 128, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.MaxPool2d(kernel_size = 2, stride = 2),
             # 세 번째 블록
-            nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(256, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(256, 256, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(128, 256, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(256, 256, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(256, 256, kernel_size= 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(256, 256, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.MaxPool2d(kernel_size = 2, stride = 2),
             # 네 번째 블록
-            nn.Conv2d(256, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(256, 512, kernel_size = 3 , padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(512, 512, kernel_size= 3 , padding= 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(512, 512, kernel_size= 3 , padding= 1 ),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(512, 512, kernel_size= 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.MaxPool2d(kernel_size= 2, stride = 2),
             # 다섯 번째 블록
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(512, 512, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(512, 512, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(512, 512, kernel_size= 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(512, 512, kernel_size = 3, padding = 1),
+            nn.ReLU(inplace = True),
+            nn.Conv2d(512, 512, kernel_size= 3, padding= 1),
+            nn.ReLU(inplace = True),
+            nn.MaxPool2d(kernel_size= 2, stride= 2),
         )
         # VGG-16의 완전 연결 계층 부분
         self.classifier = nn.Sequential(
+            # 입력이미지 224 maxpooling 5번 이므로, 224/2**5 = 7 = 512 * 7 * 7 = 25088
             nn.Linear(512 * 7 * 7, 4096),
-            nn.ReLU(inplace=True),
+            nn.ReLU(inplace = True),
             nn.Dropout(),
             nn.Linear(4096, 4096),
-            nn.ReLU(inplace=True),
+            nn.ReLU(inplace = True),
             nn.Dropout(),
             nn.Linear(4096, num_classes),
         )
@@ -111,9 +118,9 @@ class VGG16(nn.Module):
         x = self.features[0:5](x)  # 첫 번째 블록
         features_conv2 = x
         x = self.features[5:10](x)  # 두 번째 블록
-        x = self.features[10:17](x)  # 세 번째 블록
+        x = self.features[10:18](x)  # 세 번째 블록
         features_conv3 = x
-        x = self.features[17:](x)  # 나머지 블록
+        x = self.features[18:](x)  # 나머지 블록
         x = torch.flatten(x, 1)
         x = self.classifier(x)
         return x, features_conv2, features_conv3
@@ -189,7 +196,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # 모델 훈련 및 첫 번째 배치의 중간 레이어 시각화
-train_model(model, criterion, optimizer, num_epochs=10)#, visualize=True)
+train_model(model, criterion, optimizer, num_epochs=10, visualize=True)
 
 
 # 최종 test 이미지 측정 후 결과 출력
