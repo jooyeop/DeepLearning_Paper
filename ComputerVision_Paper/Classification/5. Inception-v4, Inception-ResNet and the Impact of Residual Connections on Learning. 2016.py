@@ -375,7 +375,17 @@ def compute_accuracy(model, data_loader, device):
             feature_maps_to_visualize = []
             for i in range(num_channels_to_visualize):
                 feature_map = view_x[0, i].cpu().numpy()  # Convert to numpy array once here.
-                feature_maps_to_visualize.append(feature_map)
+                
+                # Check the shape of feature_map and proceed accordingly.
+                if feature_map.ndim == 2:
+                    # If the feature_map is 2D (H, W), it's ready for visualization.
+                    feature_maps_to_visualize.append(feature_map)
+                elif feature_map.ndim == 1:
+                    # If the feature_map is 1D (C), reshape it to (1, 1, C).
+                    feature_maps_to_visualize.append(feature_map.reshape(1, 1, -1))
+                elif feature_map.ndim == 0:
+                    # If the feature_map is a scalar, reshape it to (1, 1).
+                    feature_maps_to_visualize.append(np.array([[feature_map]]))
                     
             visualize_feature_maps(feature_maps_to_visualize, titles)
 
