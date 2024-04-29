@@ -128,7 +128,7 @@ class TransitionLayer(nn.Module):
         x = self.conv1(x)
         x = self.avgpool(x)
         return x
-
+ 
 
 
 class DenseNet(nn.Module):
