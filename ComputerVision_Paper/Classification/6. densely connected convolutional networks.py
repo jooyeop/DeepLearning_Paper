@@ -218,9 +218,9 @@ def compute_accuracy(model, data_loader, device):
         _, predicted_labels = torch.max(final, 1)
         num_examples += targets.size(0)
         correct_pred += (predicted_labels == targets).sum()
-        # if i == 0:
-        #     visualize_feature_maps([layer[0, 0].detach().cpu().numpy() for layer in layers], 
-        #                            ['DenseLayer 1', 'DenseLayer 2', 'DenseLayer 3', 'DenseLayer 4', 'DenseLayer 5', 'DenseLayer 6', 'TransitionLayer 7'])
+        if i == 0:
+            visualize_feature_maps([layer[0, 0].detach().cpu().numpy() for layer in layers], 
+                                   ['DenseLayer 1', 'DenseLayer 2', 'DenseLayer 3', 'DenseLayer 4', 'DenseLayer 5', 'DenseLayer 6', 'TransitionLayer 7'])
     return 100-(correct_pred.float()/num_examples * 100)
 
 for epoch in range(NUM_EPOCHS):
