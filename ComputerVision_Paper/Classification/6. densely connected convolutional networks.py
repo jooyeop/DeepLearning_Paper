@@ -220,7 +220,7 @@ def compute_accuracy(model, data_loader, device):
         correct_pred += (predicted_labels == targets).sum()
         if i == 0:
             visualize_feature_maps([layer[0, 0].detach().cpu().numpy() for layer in layers], 
-                                   ['DenseLayer 1', 'DenseLayer 2', 'DenseLayer 3', 'DenseLayer 4', 'DenseLayer 5', 'DenseLayer 6', 'TransitionLayer 7'])
+                                   ['DenseBlock 1', 'DenseBlock 2', 'DenseBlock 3', 'DenseBlock 4', 'DenseBlock 5', 'DenseBlock 6', 'DenseBlock 7'])
     return 100-(correct_pred.float()/num_examples * 100)
 
 for epoch in range(NUM_EPOCHS):
