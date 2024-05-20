@@ -11,4 +11,5 @@
 - DenseNet
 
 ### Object_Detection
-- R-CNN (진행중)
+- R-CNN
+- Fast R-CNN(진행중)
