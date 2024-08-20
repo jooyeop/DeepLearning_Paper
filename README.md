@@ -15,4 +15,4 @@
 - Overfeat(리뷰 참고만)
 - Fast R-CNN
 - Faster R-CNN
-- OHEM (진행중)
+- OHEM (리뷰 참고만)
