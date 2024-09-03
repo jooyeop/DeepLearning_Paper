@@ -16,3 +16,5 @@
 - Fast R-CNN
 - Faster R-CNN
 - OHEM (리뷰 참고만)
+- YOLOv1
+- SSD(Single Shot MultiBox Detector)
