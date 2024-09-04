@@ -18,4 +18,4 @@
 - OHEM (리뷰 참고만)
 - YOLOv1
 - SSD(Single Shot MultiBox Detector)
-- R-FCN (진행중)
+- R-FCN (진행중) 
