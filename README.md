@@ -17,4 +17,5 @@
 - Faster R-CNN
 - OHEM (리뷰 참고만)
 - YOLOv1
-- SSD(Single Shot MultiBox Detector)(진행중)
+- SSD(Single Shot MultiBox Detector)
+- R-FCN (진행중)
